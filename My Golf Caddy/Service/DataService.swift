@@ -14,15 +14,17 @@ enum LocationError: Error {
     case unableToProcessUrl
 }
 
+enum WeatherError: Error {
+    case unableToRetrieveWeather
+    case canNotProcessData
+    case unableToProcessUrl
+}
+
 struct DataService {
     
-    // MARK: Singleton
     static let shared = DataService()
     
-    // MARK: Fetch Lat and Long from web service
-    func fetchCoordinates(city: String, postcode: String, completion: @escaping(Result<LatLng, LocationError>) -> Void) {
-        
-        // Need to allow for country specific requests at some point
+    func fetchCoordinates(city: String, completion: @escaping(Result<LatLng, LocationError>) -> Void) {
         let locationUrl = "https://open.mapquestapi.com/geocoding/v1/address?key=1kQpZCun5LCTIFskAKCQoiLiYhHOz7fg&location=\(city)"
         
         guard let url = URL(string: locationUrl) else {
@@ -30,7 +32,7 @@ struct DataService {
             return
         }
         
-        let dataTask = URLSession.shared.dataTask(with: url) {data, _, error in
+        let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
             guard let jsonData = data else {
                 completion(.failure(.noDataAvailable))
                 return
@@ -41,17 +43,38 @@ struct DataService {
                 let latLngResponse = locationResponse.results.first!.locations.first?.latLng
                 let latLng = LatLng(lat: latLngResponse!.lat, lng: latLngResponse!.lng)
                 completion(.success(latLng))
-                return
             } catch let error as NSError {
-                print("Error processing data. \(error)")
+                print("Error processing location data. \(error)")
                 completion(.failure(.canNotProcessData))
             }
         }
         dataTask.resume()
     }
     
-    // MARK: Fetch weather data
-    func fetchWeather(coordinates: Coordinate) {
+    func fetchWeather(coordinates: Coordinate, completion: @escaping(Result<WeatherResponse, WeatherError>) -> Void) {
+        let lat = coordinates.latitude
+        let long = coordinates.longitude
+        let weatherUrl = "https://api.openweathermap.org/data/2.5/weather?lat=\(lat)&lon=\(long)&appid=61859f6344902cb6dfb2c7374c5de438"
         
+        guard let url = URL(string: weatherUrl) else {
+            completion(.failure(.unableToProcessUrl))
+            return
+        }
+        
+        let dataTask = URLSession.shared.dataTask(with: url) { data, _, error in
+            guard let jsonData = data else {
+                completion(.failure(.canNotProcessData))
+                return
+            }
+            do {
+                let decoder = JSONDecoder()
+                let weatherResponse = try decoder.decode(WeatherResponse.self, from: jsonData)
+                completion(.success(weatherResponse))
+            } catch let error as NSError {
+                print("Error processing weather data. \(error)")
+                completion(.failure(.unableToRetrieveWeather))
+            }
+        }
+        dataTask.resume()
     }
 }

@@ -11,9 +11,12 @@ import LBTATools
 
 class CoursesViewController: LBTAFormController {
     
+    var pickerData = [String]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.2095873058, green: 0.2276916504, blue: 0.2519574165, alpha: 1)
+        populatePickerData()
         
         formContainerStackView.axis = .vertical
         formContainerStackView.spacing = 12
@@ -28,6 +31,20 @@ class CoursesViewController: LBTAFormController {
         
         formContainerStackView.addArrangedSubview(pickerView)
         formContainerStackView.addArrangedSubview(addCourseButton)
+        
+        print("Picker data: \(pickerData)")
+    }
+    
+    private func populatePickerData() {
+        DiskManager.shared.readCourseArrayFromDisk() { result in
+            switch result {
+            case .success(let userCourses):
+                for course in userCourses { self.pickerData.append(course.name) }
+                return
+            case .failure(let error):
+                print(error)
+            }
+        }
     }
     
     @objc private func addCourseButtonPressed() {
@@ -37,11 +54,29 @@ class CoursesViewController: LBTAFormController {
 }
 
 extension CoursesViewController: UIPickerViewDelegate, UIPickerViewDataSource {
+    
+    // Columns
     func numberOfComponents(in pickerView: UIPickerView) -> Int {
         return 1
     }
     
+    // Rows
     func pickerView(_ pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return 1
+        return pickerData.count
     }
+    
+    // Data
+    func pickerView(_ pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusing view: UIView?) -> UIView {
+        let pickerLabel = UILabel()
+        pickerLabel.textColor = UIColor.orange
+        pickerLabel.text = pickerData[row]
+        pickerLabel.font = UIFont.italicSystemFont(ofSize: 25)
+        pickerLabel.textAlignment = NSTextAlignment.center
+        
+        return pickerLabel
+    }
+    
 }
+
+
+

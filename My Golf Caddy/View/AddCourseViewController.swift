@@ -41,18 +41,18 @@ class AddCourseViewController: LBTAFormController {
         let postCodeText = postCodeTextField.text
         
         if nameText?.isEmpty ?? true {
-            displayAlert(message: "Name field must be specified")
+            displayAlert(message: "Name field must be specified", success: false)
         } else if cityText?.isEmpty ?? true {
-            displayAlert(message: "City field must be specified")
+            displayAlert(message: "City field must be specified", success: false)
         } else if postCodeText?.isEmpty ?? true {
-            displayAlert(message: "Postcode field must be specified")
+            displayAlert(message: "Postcode field must be specified", success: false)
         } else {
             attemptFetchCoordiantes(name: nameText!, city: cityText!, postcode: postCodeText!)
         }
     }
     
     private func attemptFetchCoordiantes(name: String, city: String, postcode: String) {
-        DataService.shared.fetchCoordinates(city: city, postcode: postcode) { result in
+        DataService.shared.fetchCoordinates(city: city) { result in
             switch result {
             case .failure(let error):
                 print(error)
@@ -67,15 +67,29 @@ class AddCourseViewController: LBTAFormController {
     
     private func buildCourseObject(name: String, city: String, postcode: String, coordinates: Coordinate) {
         let course = Course(name: name, city: city, postcode: postcode, location: coordinates)
-        writeCourseToFile(course: course)
+        attemptWriteCourseToDisk(course: course)
     }
     
-    private func writeCourseToFile(course: Course) {
-        
+    private func attemptWriteCourseToDisk(course: Course) {
+        DiskManager.shared.writeCourseToDisk(course: course) { result in
+            switch result {
+            case .success(let name):
+                DispatchQueue.main.async {
+                    self.displayAlert(message: "\(name) was saved.", success: true)
+                }
+                return
+            case.failure(let error):
+                DispatchQueue.main.async {
+                    self.displayAlert(message: "Unable to save \(course.name).", success: true)
+                }
+                print(error)
+                return
+            }
+        }
     }
     
-    private func displayAlert(message: String) {
-        let alert = UIAlertController(title: "Oops!", message: message, preferredStyle: .alert)
+    private func displayAlert(message: String, success: Bool) {
+        let alert = UIAlertController(title: success == true ? "Done!" : "Oops!", message: message, preferredStyle: .alert)
         let ok = UIAlertAction(title: "OK", style: .default, handler: { (action) -> Void in })
         alert.addAction(ok)
         self.present(alert, animated: true)

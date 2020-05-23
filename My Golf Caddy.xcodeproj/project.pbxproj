@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		1A3B3E0AB26679F860980322 /* Pods_My_Golf_Caddy.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 48FE50207420FCDF8F74173D /* Pods_My_Golf_Caddy.framework */; };
+		211DF35724783DF000CDC176 /* DiskManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DF35624783DF000CDC176 /* DiskManager.swift */; };
+		211DF3592478654600CDC176 /* UserCourses.swift in Sources */ = {isa = PBXBuildFile; fileRef = 211DF3582478654600CDC176 /* UserCourses.swift */; };
 		212B9DAC24716CB700775E1F /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 212B9DAB24716CB700775E1F /* HomeViewController.swift */; };
 		214223FB24719BD100242C39 /* CoursesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214223FA24719BD100242C39 /* CoursesViewController.swift */; };
 		214223FD24719D1700242C39 /* WeatherViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 214223FC24719D1700242C39 /* WeatherViewController.swift */; };
@@ -19,6 +21,7 @@
 		21488D41246DB40A00559F97 /* NineHoleScoreCardViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21488D40246DB40A00559F97 /* NineHoleScoreCardViewController.swift */; };
 		21488D47246DDEF200559F97 /* ScoreCardCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21488D46246DDEF200559F97 /* ScoreCardCollectionViewCell.swift */; };
 		21488D4B2470512100559F97 /* Course.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21488D4A2470512100559F97 /* Course.swift */; };
+		21A14EEE2479A75300E7EA55 /* WeatherResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21A14EED2479A75300E7EA55 /* WeatherResponse.swift */; };
 		21D1FAC0246C6F6E0044E1B4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D1FABF246C6F6E0044E1B4 /* AppDelegate.swift */; };
 		21D1FAC2246C6F6E0044E1B4 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 21D1FAC1246C6F6E0044E1B4 /* SceneDelegate.swift */; };
 		21D1FAC9246C6F740044E1B4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 21D1FAC8246C6F740044E1B4 /* Assets.xcassets */; };
@@ -26,6 +29,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		211DF35624783DF000CDC176 /* DiskManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DiskManager.swift; sourceTree = "<group>"; };
+		211DF3582478654600CDC176 /* UserCourses.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCourses.swift; sourceTree = "<group>"; };
 		212B9DAB24716CB700775E1F /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		214223FA24719BD100242C39 /* CoursesViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoursesViewController.swift; sourceTree = "<group>"; };
 		214223FC24719D1700242C39 /* WeatherViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherViewController.swift; sourceTree = "<group>"; };
@@ -37,6 +42,7 @@
 		21488D40246DB40A00559F97 /* NineHoleScoreCardViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NineHoleScoreCardViewController.swift; sourceTree = "<group>"; };
 		21488D46246DDEF200559F97 /* ScoreCardCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ScoreCardCollectionViewCell.swift; sourceTree = "<group>"; };
 		21488D4A2470512100559F97 /* Course.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Course.swift; sourceTree = "<group>"; };
+		21A14EED2479A75300E7EA55 /* WeatherResponse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WeatherResponse.swift; sourceTree = "<group>"; };
 		21D1FABC246C6F6E0044E1B4 /* My Golf Caddy.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "My Golf Caddy.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		21D1FABF246C6F6E0044E1B4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		21D1FAC1246C6F6E0044E1B4 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -60,28 +66,9 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		2142240624730F6700242C39 /* Service */ = {
+		211DF355247839D000CDC176 /* View */ = {
 			isa = PBXGroup;
 			children = (
-				2142240724730FA500242C39 /* DataService.swift */,
-			);
-			path = Service;
-			sourceTree = "<group>";
-		};
-		21488D4C247052BD00559F97 /* Model */ = {
-			isa = PBXGroup;
-			children = (
-				21488D4A2470512100559F97 /* Course.swift */,
-				21EAA0282470545B00FB92E6 /* Coordinate.swift */,
-				2142240B2475A1E900242C39 /* LocationResponse.swift */,
-			);
-			path = Model;
-			sourceTree = "<group>";
-		};
-		21488D4E247052D000559F97 /* Controller */ = {
-			isa = PBXGroup;
-			children = (
-				21488D46246DDEF200559F97 /* ScoreCardCollectionViewCell.swift */,
 				21488D40246DB40A00559F97 /* NineHoleScoreCardViewController.swift */,
 				212B9DAB24716CB700775E1F /* HomeViewController.swift */,
 				214223FA24719BD100242C39 /* CoursesViewController.swift */,
@@ -89,6 +76,35 @@
 				214223FE24719D5C00242C39 /* GameLengthViewController.swift */,
 				2142240024719D9A00242C39 /* ProgressionViewController.swift */,
 				214224022471B77A00242C39 /* AddCourseViewController.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2142240624730F6700242C39 /* Service */ = {
+			isa = PBXGroup;
+			children = (
+				2142240724730FA500242C39 /* DataService.swift */,
+				211DF35624783DF000CDC176 /* DiskManager.swift */,
+			);
+			path = Service;
+			sourceTree = "<group>";
+		};
+		21488D4C247052BD00559F97 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				21488D46246DDEF200559F97 /* ScoreCardCollectionViewCell.swift */,
+				21488D4A2470512100559F97 /* Course.swift */,
+				21EAA0282470545B00FB92E6 /* Coordinate.swift */,
+				2142240B2475A1E900242C39 /* LocationResponse.swift */,
+				211DF3582478654600CDC176 /* UserCourses.swift */,
+				21A14EED2479A75300E7EA55 /* WeatherResponse.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		21488D4E247052D000559F97 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -114,6 +130,7 @@
 		21D1FABE246C6F6E0044E1B4 /* My Golf Caddy */ = {
 			isa = PBXGroup;
 			children = (
+				211DF355247839D000CDC176 /* View */,
 				2142240624730F6700242C39 /* Service */,
 				21488D4E247052D000559F97 /* Controller */,
 				21488D4C247052BD00559F97 /* Model */,
@@ -263,12 +280,15 @@
 				21488D47246DDEF200559F97 /* ScoreCardCollectionViewCell.swift in Sources */,
 				214223FF24719D5C00242C39 /* GameLengthViewController.swift in Sources */,
 				21D1FAC0246C6F6E0044E1B4 /* AppDelegate.swift in Sources */,
+				21A14EEE2479A75300E7EA55 /* WeatherResponse.swift in Sources */,
 				21D1FAC2246C6F6E0044E1B4 /* SceneDelegate.swift in Sources */,
 				2142240124719D9A00242C39 /* ProgressionViewController.swift in Sources */,
 				2142240C2475A1E900242C39 /* LocationResponse.swift in Sources */,
 				21488D41246DB40A00559F97 /* NineHoleScoreCardViewController.swift in Sources */,
+				211DF35724783DF000CDC176 /* DiskManager.swift in Sources */,
 				212B9DAC24716CB700775E1F /* HomeViewController.swift in Sources */,
 				21EAA0292470545B00FB92E6 /* Coordinate.swift in Sources */,
+				211DF3592478654600CDC176 /* UserCourses.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
