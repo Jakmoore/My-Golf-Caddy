@@ -1,5 +1,5 @@
 //
-//  CoursesViewController.swift
+//  WeatherViewController.swift
 //  My Golf Caddy
 //
 //  Created by Jak Moore on 17/05/2020.
@@ -9,7 +9,9 @@
 import UIKit
 import LBTATools
 
-class CoursesViewController: LBTAFormController {
+class ChooseWeatherViewController: LBTAFormController {
+    
+    let pickerView = CoursePickerView()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -19,26 +21,20 @@ class CoursesViewController: LBTAFormController {
         formContainerStackView.spacing = 12
         formContainerStackView.layoutMargins = .init(top: 50, left: 24, bottom: 0, right: 24)
         
-        let pickerView = CoursePickerView()
         pickerView.delegate = pickerView
         pickerView.dataSource = pickerView
         
-        let addCourseButton = UIButton(title: "Add Course", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(addCourseButtonPressed))
-        addCourseButton.constrainHeight(70)
+        let okButton = UIButton(title: "OK", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(okButtonPressed))
+        okButton.constrainHeight(70)
         
         formContainerStackView.addArrangedSubview(pickerView)
-        formContainerStackView.addArrangedSubview(addCourseButton)
+        formContainerStackView.addArrangedSubview(okButton)
         formContainerStackView.setCustomSpacing(400, after: pickerView)
-        
-        print("Picker data: \(pickerView.pickerData)")
     }
     
-    @objc private func addCourseButtonPressed() {
-        let vc = AddCourseViewController()
-        self.present(vc, animated: true)
+    @objc private func okButtonPressed() {
+        let chosenCourse = pickerView.currentValue ?? pickerView.pickerData[0]
+        UserDefaults.standard.set(chosenCourse, forKey: "ChosenCourseForWeather")
+        
     }
 }
-
-
-
-

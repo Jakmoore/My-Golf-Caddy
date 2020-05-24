@@ -45,7 +45,7 @@ class HomeViewController: LBTAFormController {
     }
     
     @objc private func weatherbuttonPressed() {
-        let vc =  WeatherViewController()
+        let vc =  ChooseWeatherViewController()
         self.present(vc, animated: true)
     }
     
