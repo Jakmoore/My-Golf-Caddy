@@ -35,6 +35,7 @@ class ChooseWeatherViewController: LBTAFormController {
     @objc private func okButtonPressed() {
         let chosenCourse = pickerView.currentValue ?? pickerView.pickerData[0]
         UserDefaults.standard.set(chosenCourse, forKey: "ChosenCourseForWeather")
-        
+        let vc = WeatherViewController()
+        self.present(vc, animated: true)
     }
 }
