@@ -15,7 +15,7 @@ class WeatherViewController: LBTAFormController {
     let weatherImage = UIImageView()
     let temperatureTextView = UITextView(text: "Temperature: ?", font: .italicSystemFont(ofSize: 19), textColor: .orange, textAlignment: .center)
     let windTextView = UITextView(text: "Wind: ?", font: .italicSystemFont(ofSize: 19), textColor: .orange, textAlignment: .center)
-    let forecastTextView = UITextView(text: "Forecast", font: .italicSystemFont(ofSize: 19), textColor: .orange, textAlignment: .center)
+    let descriptionTextView = UITextView(text: "Description", font: .italicSystemFont(ofSize: 19), textColor: .orange, textAlignment: .center)
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -29,30 +29,30 @@ class WeatherViewController: LBTAFormController {
         courseTitle.text = courseName
         courseTitle.constrainHeight(100)
         
-        if let temp = getTemperature(courseName: courseName) {
-            temperatureTextView.text = "Temperature: \(temp)"
-        }
-        
-        formContainerStackView.addArrangedSubview(courseTitle)
-        formContainerStackView.addArrangedSubview(weatherImage)
-        formContainerStackView.addArrangedSubview(temperatureTextView)
-        formContainerStackView.addArrangedSubview(windTextView)
-        formContainerStackView.addArrangedSubview(forecastTextView)
-    }
-    
-    private func getTemperature(courseName: String) -> String? {
-        var temp: String?
         if let course = attemptFetchCourseObject(courseName: courseName) {
             if let weatherResponse = attemptFetchWeather(coordinates: course.location) {
-                let tempInCelcius = fahrenheitToCelcius(temp: weatherResponse.main.temp)
-                temp = String(tempInCelcius)
+                populateWeatherInfo(weather: weatherResponse)
             } else {
                 displayAlert(message: "Unable to retrieve weather info.", success: false)
             }
         } else {
             displayAlert(message: "Unable to retrieve course info.", success: false)
         }
-        return temp
+        
+        formContainerStackView.addArrangedSubview(courseTitle)
+        formContainerStackView.addArrangedSubview(weatherImage)
+        formContainerStackView.addArrangedSubview(temperatureTextView)
+        formContainerStackView.addArrangedSubview(windTextView)
+        formContainerStackView.addArrangedSubview(descriptionTextView)
+    }
+    
+    private func populateWeatherInfo(weather: WeatherResponse) {
+        let temp = String(fahrenheitToCelcius(temp: weather.main.temp))
+        let windSpeed = String(weather.wind.speed)
+        let description = weather.weather.first?.description
+        temperatureTextView.text = "Temperature: \(temp)"
+        windTextView.text = "Wind: \(windSpeed)"
+        descriptionTextView.text = "Description: \(description!)"
     }
     
     private func fahrenheitToCelcius(temp: Double) -> Double {
@@ -74,19 +74,16 @@ class WeatherViewController: LBTAFormController {
         return course
     }
     
-    private func attemptFetchWeather(coordinates: Coordinate) -> WeatherResponse? {
-        var weather: WeatherResponse?
+    private func attemptFetchWeather(coordinates: Coordinate, completion: @escaping(Result<WeatherResponse, Error>) -> Void) {
         DataService.shared.fetchWeather(coordinates: coordinates) { response in
             switch response {
-            case .success(let weatherResponse):
-                weather = weatherResponse
-                return
+            case .success(let weatherRepsonse):
+                completion(.success(weatherRepsonse))
             case .failure(let error):
                 print(error)
-                return
+                completion(.failure(error))
             }
         }
-        return weather
     }
     
     private func getCourseName() -> String {
