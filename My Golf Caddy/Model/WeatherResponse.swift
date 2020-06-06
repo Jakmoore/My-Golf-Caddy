@@ -9,8 +9,9 @@
 import Foundation
 
 struct WeatherResponse: Decodable {
-    var weather: Weather
+    var weather: [Weather]
     var main: Main
+    var wind: Wind
 }
 
 struct Weather: Decodable {
@@ -19,4 +20,8 @@ struct Weather: Decodable {
 
 struct Main: Decodable {
     var temp: Double
+}
+
+struct Wind: Decodable {
+    var speed: Double
 }

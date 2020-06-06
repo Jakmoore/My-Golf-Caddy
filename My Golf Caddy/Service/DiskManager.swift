@@ -39,7 +39,7 @@ struct DiskManager {
     
     func readCourseFromDisk(name: String, completion: @escaping(Result<Course, DiskReadError>) -> Void) {
         let decoder = JSONDecoder()
-        if let courseData = UserDefaults.standard.data(forKey: name) {
+        if let courseData = UserDefaults.standard.data(forKey: "UserCourses") {
             do {
                 let userCourses = try decoder.decode([Course].self, from: courseData)
                 for course in userCourses {
@@ -48,6 +48,8 @@ struct DiskManager {
             } catch {
                 completion(.failure(.errorReadingCourseData))
             }
+        } else {
+            completion(.failure(.errorReadingCourseData))
         }
     }
     
