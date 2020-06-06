@@ -11,18 +11,18 @@ import LBTATools
 
 class HomeViewController: LBTAFormController {
     
+    let titleView = UITextView(text: "My Golf Caddy", font: .italicSystemFont(ofSize: 35), textColor: .orange, textAlignment: .center)
+    let scoreCardButton = UIButton(title: "Score Card", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(scoreCardButtonPressed))
+    let weatherButton = UIButton(title: "Weather", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(weatherbuttonPressed))
+    let myCoursesButton = UIButton(title: "My Courses", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(myCoursesButtonPressed))
+    let progressionButton  = UIButton(title: "Progression", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(progressionButtonPressed))
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = #colorLiteral(red: 0.2095873058, green: 0.2276916504, blue: 0.2519574165, alpha: 1)
         formContainerStackView.axis = .vertical
         formContainerStackView.spacing = 12
         formContainerStackView.layoutMargins = .init(top: 50, left: 24, bottom: 0, right: 24)
-        
-        let titleView = UITextView(text: "My Golf Caddy", font: .italicSystemFont(ofSize: 35), textColor: .orange, textAlignment: .center)
-        let scoreCardButton = UIButton(title: "Score Card", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(scoreCardButtonPressed))
-        let weatherButton = UIButton(title: "Weather", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(weatherbuttonPressed))
-        let myCoursesButton = UIButton(title: "My Courses", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(myCoursesButtonPressed))
-        let progressionButton  = UIButton(title: "Progression", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(progressionButtonPressed))
         
         titleView.backgroundColor = .none
         titleView.constrainHeight(100)
