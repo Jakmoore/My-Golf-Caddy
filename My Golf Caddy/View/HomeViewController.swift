@@ -11,7 +11,7 @@ import LBTATools
 
 class HomeViewController: LBTAFormController {
     
-    let titleView = UITextView(text: "My Golf Caddy", font: .italicSystemFont(ofSize: 35), textColor: .orange, textAlignment: .center)
+    let titleView = UILabel(text: "My Golf Caddy", font: .italicSystemFont(ofSize: 35), textColor: .orange, textAlignment: .center, numberOfLines: 1)
     let scoreCardButton = UIButton(title: "Score Card", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(scoreCardButtonPressed))
     let weatherButton = UIButton(title: "Weather", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(weatherbuttonPressed))
     let myCoursesButton = UIButton(title: "My Courses", titleColor: .black, font: .italicSystemFont(ofSize: 19), backgroundColor: .orange, target: self, action: #selector(myCoursesButtonPressed))
@@ -24,7 +24,7 @@ class HomeViewController: LBTAFormController {
         formContainerStackView.spacing = 12
         formContainerStackView.layoutMargins = .init(top: 50, left: 24, bottom: 0, right: 24)
         
-        titleView.backgroundColor = .none
+        titleView.backgroundColor = UIColor.clear
         titleView.constrainHeight(100)
         scoreCardButton.constrainHeight(70)
         weatherButton.constrainHeight(70)

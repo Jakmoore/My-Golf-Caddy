@@ -37,6 +37,17 @@ struct DiskManager {
         }
     }
     
+    func attemptFetchCourseObject(courseName: String, completion: @escaping(Result<Course, Error>) -> Void) {
+        DiskManager.shared.readCourseFromDisk(name: courseName) { response in
+            switch response {
+            case .success(let course):
+                completion(.success(course))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func readCourseFromDisk(name: String, completion: @escaping(Result<Course, DiskReadError>) -> Void) {
         let decoder = JSONDecoder()
         if let courseData = UserDefaults.standard.data(forKey: "UserCourses") {

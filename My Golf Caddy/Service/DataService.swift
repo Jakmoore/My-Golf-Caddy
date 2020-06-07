@@ -51,6 +51,17 @@ struct DataService {
         dataTask.resume()
     }
     
+    func attemptFetchWeather(coordinates: Coordinate, completion: @escaping(Result<WeatherResponse, Error>) -> Void) {
+        DataService.shared.fetchWeather(coordinates: coordinates) { response in
+            switch response {
+            case .success(let weatherRepsonse):
+                completion(.success(weatherRepsonse))
+            case .failure(let error):
+                completion(.failure(error))
+            }
+        }
+    }
+    
     func fetchWeather(coordinates: Coordinate, completion: @escaping(Result<WeatherResponse, WeatherError>) -> Void) {
         let lat = coordinates.latitude
         let long = coordinates.longitude
